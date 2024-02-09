@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %} {{ course.title }} {% endblock %}
+{% block content %}
+{% load course_tags %}
+
+    <!-- BREADCRUMBS
+    ================================================== -->
+    <div class="container">
+        <nav class="mb-5 mb-md-8 mt-2" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-scroll">
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                       Lista Kurseva
+                    </a>
+                </li>
+                <li class="breadcrumb-item text-gray-800 active" aria-current="page">
+                    {{ course.title }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- COURSE
+    ================================================== -->
+    <div class="container">
+        <div class="row mb-8">
+            <div class="col-lg-8 mb-6 mb-lg-0 position-relative">
+                <h1 class="me-7 me-xl-14">
+                    {{ course.title }}
+                </h1>
+                <p class="me-xl-13 mb-5">{{ course.description }}</p>
+
+
+
+                <!-- COURSE META
+                ================================================== -->
+                <div class="d-md-flex align-items-center mb-5">
+                    <div class="border rounded-circle d-inline-block mb-4 mb-md-0 me-md-6 me-lg-4 me-xl-6">
+                        <div class="p-2">
+                            <img src="/{{course.author.author_profile}}" alt="..." class="rounded-circle" width="68" height="68">
+                        </div>
+                    </div>
+
+                    <div class="mb-4 mb-md-0 me-md-8 me-lg-4 me-xl-8">
+                        <h6 class="mb-0">Napravio/la</h6>
+                        <a href="#" class="font-size-sm text-gray-800">{{course.author.name}}</a>
+                    </div>
+
+                    <div class="mb-4 mb-md-0 me-md-8 me-lg-4 me-xl-8">
+                        <h6 class="mb-0">Kategorija</h6>
+                        <a href="#" class="font-size-sm text-gray-800">{{ course.category }}</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+                <!-- SIDEBAR FILTER
+                ================================================== -->
+                <div class="d-block rounded border p-2 shadow mb-6">
+
+                    <div class="pt-5 pb-4 px-5 px-lg-3 px-xl-5">
+                        <div class="d-flex align-items-center mb-2">
+                            {% if course.price == 0 %}
+                                        <ins class="h2 mb-0">besplatno</ins>
+
+                                        {% else %}
+                                        <ins class="h2 mb-0">{% discount_calculation course.price course.discount %}</ins>
+                                        <del class="ms-3">{{ course.price }}</del>
+                                        <div class="badge badge-lg badge-purple text-white ms-auto fw-normal">{{course.discount}} % Off</div>
+                                        {% endif %}
+
+                        </div>
+
+
+                        {% if check_enroll is None%}
+                         <a class="btn btn-orange btn-block mb-6" href="/checkout/{{course.slug}}">DODAJ KURS</a>
+                        {% else %}
+                        <button class="btn btn-orange btn-block mb-6" >VEĆ DODAT</button>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
