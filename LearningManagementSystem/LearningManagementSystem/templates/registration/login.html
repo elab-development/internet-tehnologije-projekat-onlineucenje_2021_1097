@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- PAGE TITLE
+    ================================================== -->
+    <header class="py-8 py-md-11" style="background-image: none;">
+        <div class="container text-center py-xl-2">
+            <h1 class="display-4 fw-semi-bold mb-0">Login</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-scroll justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a class="text-gray-800" href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item text-gray-800 active" aria-current="page">
+                        Uloguj se
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <!-- Img -->
+        <img class="d-none img-fluid" src="...html" alt="...">
+    </header>
+
+
+    <!-- LOGIN
+    ================================================== -->
+    <div class="container mb-11">
+        <div class="row gx-0">
+            <div class="col-md-7 col-xl-4 mx-auto">
+                <!-- Login -->
+                {% include 'components/msg.html' %}
+                <!-- Form Login -->
+                <form class="mb-5" method ="post" action="{% url 'dologin' %}">
+                    {% csrf_token %}
+                    <!-- Email -->
+                    <div class="form-group mb-5">
+                        <label for="modalSigninEmail1">
+                            Username
+                        </label>
+                        <input type="text" class="form-control" id="modalSignupUsername1" placeholder="John" name="username">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group mb-5">
+                        <label for="modalSigninPassword1">
+                            Password
+                        </label>
+                        <input type="password" class="form-control" id="modalSigninPassword1" placeholder="**********" name="password">
+                    </div>
+
+
+
+                    <!-- Submit -->
+                    <button class="btn btn-block btn-primary" type="submit">
+                        Uloguj se
+                    </button>
+                </form>
+
+                <!-- Text -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

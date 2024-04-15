@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{%block content%}
+{% load course_tags %}
+
+<!-- PAGE TITLE
+    ================================================== -->
+    <header class="py-8 py-md-11" style="background-image: none;">
+        <div class="container text-center py-xl-2">
+            <h1 class="display-4 fw-semi-bold mb-0">Upisani kursevi</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-scroll justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a class="text-gray-800" href="{% url 'home' %}}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item text-gray-800 active" aria-current="page">
+                        Moji kursevi
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <!-- Img -->
+        <img class="d-none img-fluid" src="...html" alt="...">
+    </header>
+
+
+    <!-- CONTROL BAR
+    ================================================== -->
+    <div class="container mb-6 mb-xl-8 z-index-2">
+        <div class="d-xl-flex align-items-center">
+            <p class="mb-xl-0"><a href="{% url 'export_courses_csv' %}" class="btn btn-primary">Izvezi kurseve - CSV</a></p>
+            <div class="ms-xl-auto d-xl-flex flex-wrap">
+                {% if user.is_authenticated and user.is_staff %}
+                <div class="mb-4 mb-xl-0 ms-xl-6">
+                    <a class="nav-link text-gigas"  href="{% url 'create_course' %}">
+                            Kreiraj kurs
+                        </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- COURSE LIST V1
+    ================================================== -->
+    <div class="container pb-4 pb-xl-7">
+
+        <div class="row row-cols-md-2 row-cols-xl-3 mb-6 mb-xl-3">
+            {% for i in courses %}
+            <div class="col-12 col-md-6 col-xl-4 col-wd-3 pb-4 pb-md-7" style="padding-right:15px;padding-left:15px;">
+                <!-- Card -->
+                <div class="card border shadow p-2 rounded-lg sk-fade">
+                    <!-- Image -->
+                    <div class="card-zoom position-relative">
+
+
+                        <a href="{{i.course_det.get_absolute_url}}" class="card-img sk-thumbnail img-ratio-9 d-block">
+                            <img class="rounded shadow-light-lg" src="{{i.course_det.featured_image}}" alt="...">
+                        </a>
+
+                        <span class="badge sk-fade-bottom badge-lg badge-primary badge-pill badge-float bottom-0 left-0 mb-4 ms-4 fw-bold">
+                                        <span class="text-white text-uppercase fw-bold font-size-xs">Discount {{i.course_det.discount}} %</span>
+                                    </span>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">
+                        <a href="{{i.course.get_absolute_url}}" class="d-block">
+                            <div class="avatar avatar-xl badge-float position-absolute top-0 right-0 mt-n6 me-5 rounded-circle shadow border border-white border-w-lg">
+                                <img src="{{i.course_det.author_profile}}" alt="..." class="avatar-img rounded-circle">
+                            </div>
+                        </a>
+
+                        <!-- Preheading -->
+                        <a href="{{i.course_det.get_absolute_url}}"><span class="mb-1 d-inline-block text-gray-800">{{i.course_det.category_name}}</span></a>
+
+
+                        <!-- Heading -->
+                        <div class="position-relative">
+                            <a href="{{i.course_det.get_absolute_url}}" class="d-block stretched-link"><h4
+                                    class="line-clamp-2 h-md-48 h-lg-58 me-md-6 me-lg-10 me-xl-4 mb-2">
+                                {{i.course_det.title}}</h4></a>
+
+                            {% if i.course_det.price == 0 %}
+                            <div class="col-auto px-2 text-right">
+                                <ins class="h4 mb-0 d-block mb-lg-n1"><a href="#"
+                                                                         class="badge badge-primary">Besplatno</a></ins>
+                            </div>
+                            {% else %}
+                            <div class="col-auto px-2 text-right">
+                                <del class="font-size-sm">{{i.course_det.price}} RSD</del>
+                                <ins class="h4 mb-0 d-block mb-lg-n1">{% discount_calculation i.course_det.price
+                                    i.course_det.discount %} RSD
+                                </ins>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+                        </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock%}
